@@ -1,4 +1,4 @@
-# UnityOpenworldSandbox
+# FelixDump
 
 
 To make sure that git merge will work fine, add following code to your .gitconfig file (/c/Users/user_name/.gitconfig):
