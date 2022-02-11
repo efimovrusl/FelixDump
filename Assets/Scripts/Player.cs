@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public class Player : MonoBehaviour
 {
-    public UnityEvent onDeath;
+    public event UnityAction onDeath;
     
     
     public void TakeDamage()
