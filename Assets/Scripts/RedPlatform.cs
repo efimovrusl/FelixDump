@@ -1,10 +1,8 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class RedPlatform : MonoBehaviour
+public class RedPlatform : Platform
 {
+    
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.TryGetComponent<Player>(out var player))
