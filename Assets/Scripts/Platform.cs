@@ -11,7 +11,7 @@ public class Platform : MonoBehaviour
     {
         if (collision.collider.TryGetComponent<Player>(out var player))
         {
-            player.GetComponent<Rigidbody>().velocity = -Physics.gravity * 0.35f;
+            player.GetComponent<Rigidbody>().velocity = -Physics.gravity * 0.7f;
         }
     }
 }
