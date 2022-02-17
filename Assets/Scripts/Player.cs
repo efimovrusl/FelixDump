@@ -16,7 +16,11 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // doubling default gravity (default = 7.0 m/s^2)
         _rigidbody.AddForce(Physics.gravity * Time.fixedDeltaTime, ForceMode.VelocityChange);
+        
+        // limiting speed for the player to be able
+        // to control helix rotation like he's Neo
         _rigidbody.velocity = Vector3.ClampMagnitude(_rigidbody.velocity, 7);
     }
 

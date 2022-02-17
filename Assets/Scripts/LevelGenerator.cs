@@ -30,13 +30,15 @@ public class LevelGenerator : MonoBehaviour
     
     // INJECTED AT STARTUP
     [Inject] private Player player;
-    [Inject] private LevelFactory levelFactory;
+    [Inject] private LevelPoolFactory levelFactory;
 
     
     
 
     private void Awake()
     {
+        
+        
         player.onDeath += () =>
         {
             SceneManager.LoadScene("MainScene");
