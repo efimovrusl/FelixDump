@@ -3,8 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[SelectionBase]
-public class Platform : MonoBehaviour
+[SelectionBase, DisallowMultipleComponent]
+public abstract class Platform : MonoBehaviour
 {
     [SerializeField] protected float angle;
     private void OnCollisionEnter(Collision collision)

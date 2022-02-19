@@ -9,13 +9,11 @@ using Random = UnityEngine.Random;
 
 public class LevelGenerator : MonoBehaviour
 {
-    [Space(5), Header("Prefab refs")]
-    [SerializeField] private GameObject floorRoot;
-    [SerializeField] private GameObject helix;
-    [SerializeField] private GameObject platform30; 
-    [SerializeField] private GameObject platform45; 
-    [SerializeField] private GameObject redPlatform20; 
-    [SerializeField] private GameObject redPlatform45;
+    [Space(5), Header("ObjectPooling factories")] 
+    [SerializeField] private PoolFactory platform30Factory;
+    [SerializeField] private PoolFactory redPlatform20Factory;
+    [SerializeField] private PoolFactory cylinderFactory;
+    [SerializeField] private PoolFactory floorRootFactory;
     
     [Space(5), Header("Object refs")]
     [SerializeField] private Transform helixTransform;
@@ -30,7 +28,6 @@ public class LevelGenerator : MonoBehaviour
     
     // INJECTED AT STARTUP
     [Inject] private Player player;
-    [Inject] private LevelPoolFactory levelFactory;
 
     
     
@@ -75,24 +72,20 @@ public class LevelGenerator : MonoBehaviour
             floorRotationDelta += Mathf.Sqrt(difficulty) * Random.Range(-10f, 10f);
             var floorPosition = Vector3.down * i * FloorHeight;
 
-            FloorRoot floor = Instantiate(floorRoot, floorPosition, 
-                helixTransform.rotation, helixTransform).GetComponent<FloorRoot>();
-
-            floor.transform.Rotate(0, floorRotationDelta, 0);
+            FloorRoot floor = floorRootFactory.GetInstance(helixTransform,
+                floorPosition, Quaternion.identity).GetComponent<FloorRoot>();
             
-            // when player passes floor,
-            // 1) new floor generates
-            // 2) this floor is being destroyed
             floor.OnFloorPass += () =>
             {
                 floorsToGenerate++;
-                floor.DestroyFloor();
+                floor.gameObject.SetActive(false);
             };
+
+            cylinderFactory.GetInstance(helixTransform, floorPosition, Quaternion.identity);
+
             
-            Instantiate(helix, floorPosition, helixTransform.rotation, helixTransform);
-
+            //       >>>>> LEVEL GENERATION BEGINS HERE <<<<<
             for (int k = 0; k < sectionAmount; k++) hasPlatform[k] = 1;
-
             // defining where non-path hole is
             int nonPathHoleSection = Random.Range(pathSection + 3, 
                 pathSection + sectionAmount - 4) % sectionAmount;
@@ -123,8 +116,8 @@ public class LevelGenerator : MonoBehaviour
             {
                 if (hasPlatform[j] == 1)
                 {
-                    floor.SpawnPlatform(platform30, 
-                        Quaternion.Euler(0, 30 * j, 0));   
+                    floor.AddPlatform(platform30Factory.GetInstance(floor.transform, 
+                        Vector3.zero, Quaternion.Euler(0, 30 * j, 0)));
                 }
             }
             

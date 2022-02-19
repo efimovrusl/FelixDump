@@ -53,7 +53,7 @@ GameObject:
   - component: {fileID: 5309030303356839927}
   - component: {fileID: 7631711107268485870}
   - component: {fileID: 2762093734834738975}
-  - component: {fileID: 6684789560443500598}
+  - component: {fileID: 4389748413166071856}
   m_Layer: 6
   m_Name: RedPlatform20
   m_TagString: Untagged
@@ -707,7 +707,7 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
---- !u!114 &6684789560443500598
+--- !u!114 &4389748413166071856
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -716,10 +716,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7716257176736207323}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99dc45f1b48ab084389719d5904f36ae, type: 3}
+  m_Script: {fileID: 11500000, guid: 9afc78b64b32d8a4186f7e09f6cf8132, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  angle: 20
+  angle: 0
 --- !u!1001 &204131783054766508
 PrefabInstance:
   m_ObjectHideFlags: 0

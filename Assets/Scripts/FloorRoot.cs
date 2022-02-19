@@ -10,7 +10,7 @@ public class FloorRoot : MonoBehaviour
 {
     // private Boost _boosts // TODO: Add coins and boosts
 
-    private List<GameObject> _platforms; // platforms, walls, etc
+    private List<GameObject> platforms; // platforms, walls, etc
 
     // private LevelGenerator
 
@@ -18,40 +18,40 @@ public class FloorRoot : MonoBehaviour
     
     private void Awake()
     {
-        _platforms = new List<GameObject>(16);
+        platforms = new List<GameObject>(16);
     }
 
+    static int cntr = 0; 
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent<Player>(out _))
         {
             OnFloorPass?.Invoke();
+            Debug.Log($"LevelPassed: {cntr++}");
         }
     }
     
-    public void SpawnPlatform(GameObject prefab, Quaternion rotation)
+    public void AddPlatform(GameObject platform)
     {
-        _platforms.Add(Instantiate(prefab, transform.position, 
-            transform.rotation * rotation, transform));
+        platforms.Add(platform);
+        // Instantiate(prefab, transform.position, 
+        // transform.rotation * rotation, transform));
     }
 
     public void DestroyFloor()
     {
         GetComponent<Collider>().enabled = false;
-        foreach (var platform in _platforms)
+        foreach (var platform in platforms)
         {
-            
             platform.transform.parent = null;
-            var pRigidbody = platform.AddComponent<Rigidbody>();
+            var pRigidbody = platform.GetComponent<Rigidbody>();
+            pRigidbody.isKinematic = false;
             pRigidbody.AddRelativeForce(Vector3.left * 100);
 
             StartCoroutine(DoAfterSeconds(
-                () => Destroy(platform), 1));
-
-
-
+                () => platform.SetActive(false), 1));
         }
-        // Destroy(this.gameObject);
+        gameObject.SetActive(false);
     }
 
     private IEnumerator DoAfterSeconds(Action action, float seconds)

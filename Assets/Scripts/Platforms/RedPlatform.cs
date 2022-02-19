@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class RedPlatform : Platform
+public abstract class RedPlatform : Platform
 {
     
     private void OnCollisionEnter(Collision collision)
