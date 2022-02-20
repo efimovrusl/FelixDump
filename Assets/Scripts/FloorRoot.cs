@@ -27,31 +27,34 @@ public class FloorRoot : MonoBehaviour
         if (other.TryGetComponent<Player>(out _))
         {
             OnFloorPass?.Invoke();
+            DeactivateFloor();
             Debug.Log($"LevelPassed: {cntr++}");
         }
     }
     
     public void AddPlatform(GameObject platform)
     {
+        GetComponent<Collider>().enabled = true;
         platforms.Add(platform);
-        // Instantiate(prefab, transform.position, 
-        // transform.rotation * rotation, transform));
+        platform.layer = 6; // platform
     }
 
-    public void DestroyFloor()
+    private void DeactivateFloor()
     {
         GetComponent<Collider>().enabled = false;
         foreach (var platform in platforms)
         {
-            platform.transform.parent = null;
-            var pRigidbody = platform.GetComponent<Rigidbody>();
-            pRigidbody.isKinematic = false;
-            pRigidbody.AddRelativeForce(Vector3.left * 100);
+            platform.SetActive(false);
 
-            StartCoroutine(DoAfterSeconds(
-                () => platform.SetActive(false), 1));
+            // platform.transform.parent = null;
+            // platform.layer = 8; // broken platform
+            // var pRigidbody = platform.GetComponent<Rigidbody>();
+            // pRigidbody.isKinematic = false;
+            // pRigidbody.AddRelativeForce(Vector3.left * 100);
+
+            // StartCoroutine(DoAfterSeconds(
+            //     () => platform.SetActive(false), 1));
         }
-        gameObject.SetActive(false);
     }
 
     private IEnumerator DoAfterSeconds(Action action, float seconds)

@@ -1,7 +1,9 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+namespace Platforms.Components
+{
+    
 [DisallowMultipleComponent]
 public class RotationComponent : MonoBehaviour
 {
@@ -15,6 +17,7 @@ public class RotationComponent : MonoBehaviour
 
     private IEnumerator LocalRotationCoroutine(Quaternion deltaRotation, float cycleDuration)
     {
+        yield break;
         WaitForEndOfFrame waitForEndOfFrame = new WaitForEndOfFrame();
         Quaternion initialRotation = transform.localRotation;
             
@@ -40,4 +43,5 @@ public class RotationComponent : MonoBehaviour
         }
     }
 
+}
 }

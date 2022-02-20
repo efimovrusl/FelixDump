@@ -1,6 +1,5 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
+using Platforms.Components;
 using UnityEngine;
 
 /// <summary>
@@ -11,6 +10,8 @@ using UnityEngine;
 /// </summary>
 public class PoolFactory : MonoBehaviour
 {
+    // private static int counter = 0;
+    
     [SerializeField] private GameObject prefab;
     [SerializeField, Range(1, 1024)] private int poolSize = 128;
     
@@ -45,38 +46,18 @@ public class PoolFactory : MonoBehaviour
         Quaternion initialRotation, Quaternion endRotation, float cyclePeriod = 3f)
     {
         GameObject instance = poolQueue.Dequeue();
-        instance.transform.parent = parentTransform;
         poolQueue.Enqueue(instance);
+        instance.GetComponent<ResetComponent>().Reset();
         instance.SetActive(true);
+        // instance.gameObject.name = $"{prefab.name} {counter++}";
+        instance.transform.parent = parentTransform;
         instance.transform.localPosition = position;
         instance.transform.localRotation = initialRotation;
         instance.GetComponent<RotationComponent>().StartCyclicRotation(endRotation, cyclePeriod);
         return instance;
     }
 
-    [DisallowMultipleComponent]
-    internal class ResetComponent : MonoBehaviour
-    {
-        private Rigidbody _rigidbody;
-        private RotationComponent _rotatingComponent;
-
-        // Resets gameobject on adding ResetComponent or scene loading
-        // TODO: Check if Reset is called automatically on Awake & delete if so
-        private void Awake() => Reset(); 
-
-        public void Reset()
-        {
-            transform.parent = null;
-            if (!TryGetComponent<Rigidbody>(out _))
-                _rigidbody = gameObject.AddComponent<Rigidbody>();
-            _rigidbody.useGravity = true;
-            _rigidbody.velocity = Vector3.zero;
-            _rigidbody.isKinematic = true;
-            gameObject.transform.localRotation = Quaternion.identity;
-            gameObject.transform.localPosition = Vector3.zero;
-            gameObject.SetActive(false);
-        }
-    }
+    
 
 }
 

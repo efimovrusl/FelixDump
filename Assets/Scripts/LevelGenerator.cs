@@ -32,7 +32,7 @@ public class LevelGenerator : MonoBehaviour
     
     
 
-    private void Awake()
+    private void Start()
     {
         
         
@@ -59,6 +59,11 @@ public class LevelGenerator : MonoBehaviour
         int floorsToGenerate = 5;
         float floorRotationDelta = 0;
 
+        
+        // Generate 2 cylinders on top of the first floor
+        cylinderFactory.GetInstance(helixTransform, GetFloorCenterPosition(-2), Quaternion.identity);
+        cylinderFactory.GetInstance(helixTransform, GetFloorCenterPosition(-1), Quaternion.identity);
+
         for (int i = 0; i < height; i++, pathLeft--)
         {
             yield return new WaitUntil(() =>
@@ -70,7 +75,7 @@ public class LevelGenerator : MonoBehaviour
             });
 
             floorRotationDelta += Mathf.Sqrt(difficulty) * Random.Range(-10f, 10f);
-            var floorPosition = Vector3.down * i * FloorHeight;
+            var floorPosition = GetFloorCenterPosition(i);
 
             FloorRoot floor = floorRootFactory.GetInstance(helixTransform,
                 floorPosition, Quaternion.identity).GetComponent<FloorRoot>();
@@ -78,7 +83,6 @@ public class LevelGenerator : MonoBehaviour
             floor.OnFloorPass += () =>
             {
                 floorsToGenerate++;
-                floor.gameObject.SetActive(false);
             };
 
             cylinderFactory.GetInstance(helixTransform, floorPosition, Quaternion.identity);
@@ -89,7 +93,7 @@ public class LevelGenerator : MonoBehaviour
             // defining where non-path hole is
             int nonPathHoleSection = Random.Range(pathSection + 3, 
                 pathSection + sectionAmount - 4) % sectionAmount;
-            // first section
+            // first section 
             hasPlatform[nonPathHoleSection] = 0;
             // second section
             hasPlatform[(nonPathHoleSection + 1) % sectionAmount] = 0;
@@ -123,8 +127,15 @@ public class LevelGenerator : MonoBehaviour
             
         }
     }
-
     
+    /// <summary>
+    /// Gets floor center coordinates based on floorHeight const and floor's index
+    /// </summary>
+    /// <param name="floorIndex">starts from 0</param>
+    /// <returns></returns>
+    private Vector3 GetFloorCenterPosition(int floorIndex) =>
+        Vector3.down * floorIndex * FloorHeight;
+
 }
 
 
