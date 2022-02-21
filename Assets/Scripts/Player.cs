@@ -27,6 +27,6 @@ public class Player : MonoBehaviour
 
     public void TakeDamage()
     {
-        onDeath.Invoke();
+        onDeath?.Invoke();
     }
 }

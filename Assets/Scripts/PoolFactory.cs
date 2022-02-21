@@ -29,13 +29,13 @@ public class PoolFactory : MonoBehaviour
         for (int i = 0; i < poolSize; i++)
         {
             GameObject obj = Instantiate(prefab);
-            obj.AddComponent<ResetComponent>();
             obj.AddComponent<RotationComponent>();
+            obj.AddComponent<ResetComponent>();
             poolQueue.Enqueue(obj);
         }
     }
     #endregion
-
+    
     /// <summary> Position and rotation args are treated as LOCAL </summary>
     public GameObject GetInstance(Transform parentTransform, Vector3 position, Quaternion rotation) =>
         GetInstance(parentTransform, position, rotation, rotation, 
@@ -49,7 +49,6 @@ public class PoolFactory : MonoBehaviour
         poolQueue.Enqueue(instance);
         instance.GetComponent<ResetComponent>().Reset();
         instance.SetActive(true);
-        // instance.gameObject.name = $"{prefab.name} {counter++}";
         instance.transform.parent = parentTransform;
         instance.transform.localPosition = position;
         instance.transform.localRotation = initialRotation;

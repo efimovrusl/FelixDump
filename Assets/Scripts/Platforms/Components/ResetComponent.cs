@@ -1,25 +1,23 @@
-﻿using UnityEngine;
+﻿using System.ComponentModel;
+using UnityEngine;
 
 namespace Platforms.Components
 {
 [DisallowMultipleComponent]
 public class ResetComponent : MonoBehaviour
 {
-    private Rigidbody _rigidbody;
-    private RotationComponent _rotatingComponent;
+    private Rigidbody rigbody;
 
     private void Awake() => Reset();
 
     public void Reset()
     {
+        StopAllCoroutines();
         transform.parent = null;
         if (!TryGetComponent<Rigidbody>(out _))
-            _rigidbody = gameObject.AddComponent<Rigidbody>();
-        _rigidbody.useGravity = true;
-        _rigidbody.velocity = Vector3.zero;
-        _rigidbody.isKinematic = true;
-        gameObject.transform.localRotation = Quaternion.identity;
-        gameObject.transform.localPosition = Vector3.zero;
+            rigbody = gameObject.AddComponent<Rigidbody>();
+        rigbody.isKinematic = true;
+        gameObject.layer = 6; // platforms' layer
         gameObject.SetActive(false);
     }
 }
