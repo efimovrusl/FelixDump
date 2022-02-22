@@ -18,7 +18,7 @@ public class FloorRoot : MonoBehaviour
     
     private void Awake()
     {
-        platforms = new List<GameObject>(16);
+        platforms = new List<GameObject>(20);
     }
 
     private void OnTriggerEnter(Collider other)

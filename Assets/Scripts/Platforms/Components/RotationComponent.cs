@@ -17,6 +17,7 @@ public class RotationComponent : MonoBehaviour
 
     private IEnumerator LocalRotationCoroutine(Quaternion deltaRotation, float cycleDuration)
     {
+        // TODO: FIX ROTATIONS - one of the coroutines or both, or whatever
         while (true)
         {
             yield return StartCoroutine(RotateLocally(

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using Platforms.Components;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Zenject;
@@ -58,7 +59,7 @@ public class LevelGenerator : MonoBehaviour
         cylinderFactory.GetInstance(helixTransform, GetFloorCenterPosition(-2), Quaternion.identity);
         cylinderFactory.GetInstance(helixTransform, GetFloorCenterPosition(-1), Quaternion.identity);
 
-        for (int i = 0; i < height; i++, pathLeft--)
+        for (int floorIndex = 0; floorIndex < height; floorIndex++, pathLeft--)
         {
             yield return new WaitUntil(() =>
             {
@@ -69,7 +70,7 @@ public class LevelGenerator : MonoBehaviour
             });
             
             floorRotationDelta += Mathf.Sqrt(difficulty) * Random.Range(-10f, 10f);
-            var floorPosition = GetFloorCenterPosition(i);
+            var floorPosition = GetFloorCenterPosition(floorIndex);
 
             FloorRoot floor = floorRootFactory.GetInstance(helixTransform,
                 floorPosition, Quaternion.identity).GetComponent<FloorRoot>();
@@ -77,6 +78,10 @@ public class LevelGenerator : MonoBehaviour
             floor.OnFloorPass += () => floorsToGenerate++;
 
             cylinderFactory.GetInstance(helixTransform, floorPosition, Quaternion.identity);
+            
+            
+            // TODO: Encapsulate level generation to some flexible & higher-level abstraction
+            /* Seems to never be done */
             
             //       >>>>> LEVEL GENERATION BEGINS HERE <<<<<
             for (int k = 0; k < sectionAmount; k++) hasPlatform[k] = 1;
@@ -106,6 +111,7 @@ public class LevelGenerator : MonoBehaviour
                 }
             }
 
+            // platforms spawning
             for (int j = 0; j < sectionAmount; j++)
             {
                 if (hasPlatform[j] == 1)
@@ -114,6 +120,36 @@ public class LevelGenerator : MonoBehaviour
                         Vector3.zero, Quaternion.Euler(0, 30 * j, 0)));
                 }
             }
+            
+            // red platforms spawning
+            // list of holes, first and last empty sections' indexes  
+            List<(int, int)> holes = new List<(int, int)>();
+            int cycleOffset = 0;
+            for (; cycleOffset < sectionAmount; cycleOffset++)
+                if (hasPlatform[cycleOffset] == 0) break;
+            if (cycleOffset == sectionAmount)
+                throw new Exception($"No platforms are at the level #{floorIndex}");
+            
+            for (int j = cycleOffset, holeStart = 0; j < sectionAmount + cycleOffset; j++)
+            {
+                if (hasPlatform[j % sectionAmount] == 0 &&
+                    hasPlatform[(j - 1) % sectionAmount] == 1) 
+                    holeStart = j;
+                else if (hasPlatform[j % sectionAmount] == 1 && 
+                    hasPlatform[(j - 1) % sectionAmount] == 0)
+                    holes.Add((holeStart, j - 1));
+            }
+
+            foreach (var hole in holes)
+            {
+                var redPlatform = redPlatform20Factory.GetInstance(floor.transform,
+                    Vector3.zero, Quaternion.Euler(0, 30 * hole.Item1 - 15, 0));
+                redPlatform.GetComponent<RotationComponent>().StartCyclicRotation(
+                    Quaternion.Euler(0, 30 * (hole.Item2 - hole.Item1 + 1), 0), 3f);
+                floor.AddPlatform(redPlatform);
+            }
+                
+            
         }
     }
     
