@@ -141,7 +141,7 @@ public class LevelGenerator : MonoBehaviour
             }
 
             foreach (var hole in holes)
-            {
+            {   
                 var redPlatform = redPlatform20Factory.GetInstance(floor.transform,
                     Vector3.zero, Quaternion.Euler(0, 30 * hole.Item1 - 15, 0));
                 redPlatform.GetComponent<RotationComponent>().StartCyclicRotation(
