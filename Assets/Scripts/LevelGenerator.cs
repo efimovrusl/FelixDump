@@ -10,48 +10,47 @@ using Random = UnityEngine.Random;
 
 public class LevelGenerator : MonoBehaviour
 {
-    [Space(5), Header("ObjectPooling factories")] 
-    [SerializeField] private PoolFactory platform30Factory;
+    [Space(5), Header("ObjectPooling factories")] [SerializeField]
+    private PoolFactory platform30Factory;
+
     [SerializeField] private PoolFactory redPlatform20Factory;
     [SerializeField] private PoolFactory cylinderFactory;
     [SerializeField] private PoolFactory floorRootFactory;
-    
-    [Space(5), Header("Object refs")]
-    [SerializeField] private Transform helixTransform;
-    
-    [Space(5), Header("Settings")]
-    [SerializeField, Range(1, 5)] private int difficulty;
+
+    [Space(5), Header("Object refs")] [SerializeField]
+    private Transform helixTransform;
+
+    [Space(5), Header("Settings")] [SerializeField, Range(1, 5)]
+    private int difficulty;
+
     [SerializeField, Range(10, 100)] private int height;
 
-    
+
     // Also, the height of cylinder section
     private const float FloorHeight = 1.5f;
-    
-    
+
+
     // INJECTED AT STARTUP
     [Inject] private Player player;
 
-    
+
     private void Start()
     {
-        player.onDeath += () =>
-        {
-            SceneManager.LoadScene("MainScene");
-        };
-        
+        player.onDeath += () => { SceneManager.LoadScene("MainScene"); };
+
         StartCoroutine(GenerateLevel());
-   }
+    }
 
     // TODO: Encapsulate generation to outer class
     IEnumerator GenerateLevel()
     {
         int pathLeft = 0;
-        
+
         // which of 12 (360/30) sections is for straight-fall path
         int pathSection = 0;
         const int sectionAmount = 12;
         var hasPlatform = new int[sectionAmount];
-        
+
         int floorsToGenerate = 5;
         float floorRotationDelta = 0;
 
@@ -68,21 +67,21 @@ public class LevelGenerator : MonoBehaviour
                 floorsToGenerate--;
                 return true;
             });
-            
+
             floorRotationDelta += Mathf.Sqrt(difficulty) * Random.Range(-10f, 10f);
             var floorPosition = GetFloorCenterPosition(floorIndex);
 
             FloorRoot floor = floorRootFactory.GetInstance(helixTransform,
                 floorPosition, Quaternion.identity).GetComponent<FloorRoot>();
-            
+
             floor.OnFloorPass += () => floorsToGenerate++;
 
             cylinderFactory.GetInstance(helixTransform, floorPosition, Quaternion.identity);
-            
-            
+
+
             // TODO: Encapsulate level generation to some flexible & higher-level abstraction
             /* Seems to never be done */
-            
+
             //       >>>>> LEVEL GENERATION BEGINS HERE <<<<<
             for (int k = 0; k < sectionAmount; k++) hasPlatform[k] = 1;
             // defining where non-path hole is
@@ -120,23 +119,24 @@ public class LevelGenerator : MonoBehaviour
                         Vector3.zero, Quaternion.Euler(0, 30 * j, 0)));
                 }
             }
-            
+
             // red platforms spawning
             // list of holes, first and last empty sections' indexes  
             List<(int, int)> holes = new List<(int, int)>();
             int cycleOffset = 0;
             for (; cycleOffset < sectionAmount; cycleOffset++)
-                if (hasPlatform[cycleOffset] == 0) break;
+                if (hasPlatform[cycleOffset] == 0)
+                    break;
             if (cycleOffset == sectionAmount)
                 throw new Exception($"No platforms are at the level #{floorIndex}");
-            
+
             for (int j = cycleOffset, holeStart = 0; j < sectionAmount + cycleOffset; j++)
             {
                 if (hasPlatform[j % sectionAmount] == 0 &&
-                    hasPlatform[(j - 1) % sectionAmount] == 1) 
+                    hasPlatform[(j - 1) % sectionAmount] == 1)
                     holeStart = j;
-                else if (hasPlatform[j % sectionAmount] == 1 && 
-                    hasPlatform[(j - 1) % sectionAmount] == 0)
+                else if (hasPlatform[j % sectionAmount] == 1 &&
+                         hasPlatform[(j - 1) % sectionAmount] == 0)
                     holes.Add((holeStart, j - 1));
             }
 
@@ -148,11 +148,9 @@ public class LevelGenerator : MonoBehaviour
                     Quaternion.Euler(0, 30 * (hole.Item2 - hole.Item1 + 1), 0), 3f);
                 floor.AddPlatform(redPlatform);
             }
-                
-            
         }
     }
-    
+
     /// <summary>
     /// Gets floor center coordinates based on floorHeight const and floor's index
     /// </summary>
@@ -160,11 +158,4 @@ public class LevelGenerator : MonoBehaviour
     /// <returns></returns>
     private Vector3 GetFloorCenterPosition(int floorIndex) =>
         Vector3.down * floorIndex * FloorHeight;
-
 }
-
-
-
-
-
-
