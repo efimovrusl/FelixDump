@@ -10,12 +10,9 @@ using UnityEngine;
 /// </summary>
 public class PoolFactory : MonoBehaviour
 {
-    // private static int counter = 0;
-    
     [SerializeField] private GameObject prefab;
     [SerializeField, Range(1, 1024)] private int poolSize = 128;
     
-    // TODO: Test if "new()" works
     private readonly Queue<GameObject> poolQueue = new Queue<GameObject>();
 
     #region Pool initialization
@@ -30,7 +27,7 @@ public class PoolFactory : MonoBehaviour
         {
             GameObject obj = Instantiate(prefab);
             obj.AddComponent<RotationComponent>();
-            obj.AddComponent<ResetComponent>();
+            obj.AddComponent<ResetComponent>().parentForInactiveState = gameObject?.transform;
             poolQueue.Enqueue(obj);
         }
     }
@@ -47,7 +44,8 @@ public class PoolFactory : MonoBehaviour
     {
         GameObject instance = poolQueue.Dequeue();
         poolQueue.Enqueue(instance);
-        instance.GetComponent<ResetComponent>().Reset();
+        // TODO: Seem to be not needed anymore, but..
+        // instance.GetComponent<ResetComponent>().Reset();
         instance.SetActive(true);
         instance.transform.parent = parentTransform;
         instance.transform.localPosition = position;

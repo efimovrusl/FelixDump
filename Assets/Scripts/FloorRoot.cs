@@ -52,7 +52,7 @@ public class FloorRoot : MonoBehaviour
                 Random.rotation.eulerAngles * 
                 (Random.Range(0, 1) > 0.5f ? -1 : 1));
             StartCoroutine(DoAfterSeconds(
-                () => platform.SetActive(false), 0.5f));
+                () => platform.GetComponent<ResetComponent>().Reset(), 0.5f));
         }
         platforms.Clear();
     }

@@ -130,13 +130,14 @@ public class LevelGenerator : MonoBehaviour
             if (cycleOffset == sectionAmount)
                 throw new Exception($"No platforms are at the level #{floorIndex}");
 
+            // TODO: refactor this shaming piece of.. code
             for (int j = cycleOffset, holeStart = 0; j < sectionAmount + cycleOffset; j++)
             {
-                if (hasPlatform[j % sectionAmount] == 0 &&
-                    hasPlatform[(j - 1) % sectionAmount] == 1)
+                if (hasPlatform[(j + sectionAmount) % sectionAmount] == 0 &&
+                    hasPlatform[(j - 1 + sectionAmount) % sectionAmount] == 1)
                     holeStart = j;
-                else if (hasPlatform[j % sectionAmount] == 1 &&
-                         hasPlatform[(j - 1) % sectionAmount] == 0)
+                else if (hasPlatform[(j + sectionAmount) % sectionAmount] == 1 &&
+                         hasPlatform[(j - 1 + sectionAmount) % sectionAmount] == 0)
                     holes.Add((holeStart, j - 1));
             }
 

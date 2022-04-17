@@ -3,6 +3,7 @@ using Zenject;
 
 namespace Installers
 {
+    // private 
     public class SceneInstaller : MonoInstaller
     {
         [SerializeField] private Player player;

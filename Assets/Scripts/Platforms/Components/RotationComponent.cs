@@ -8,8 +8,6 @@ namespace Platforms.Components
 [DisallowMultipleComponent]
 public class RotationComponent : MonoBehaviour
 {
-    [SerializeField] private int semafor = 0;
-    
     public void StartCyclicRotation(Quaternion deltaRotation, float cyclePeriod) => 
         StartCoroutine(LocalRotationCoroutine(deltaRotation, cyclePeriod));
         
