@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/USS_Classes/menu.uss?fileID=7433441132597879392&amp;guid=424252cf08150bd40a007926f487406c&amp;type=3#menu" />
+    <ui:VisualElement name="menuBase" class="menu-base">
+        <ui:VisualElement name="menuContainer" class="menu-container">
+            <ui:Label text="SETTINGS" display-tooltip-when-elided="true" name="menuLabel" class="menu-label" />
+            <ui:Slider picking-mode="Ignore" label="Slider" value="42" high-value="100" name="sensitivitySlider" direction="Horizontal" low-value="1" show-input-field="true" inverted="false" />
+            <ui:Button text="BACK" display-tooltip-when-elided="true" name="backToMainMenuButton" class="menu-button" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

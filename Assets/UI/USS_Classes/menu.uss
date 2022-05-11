@@ -1,0 +1,79 @@
+.menu-container {
+    justify-content: center;
+    align-items: center;
+    height: 50%;
+    width: 75%;
+    opacity: 0.87;
+    background-color: rgb(255, 241, 201);
+    border-top-left-radius: 70px;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 70px;
+    border-left-width: 5px;
+    border-right-width: 5px;
+    border-top-width: 5px;
+    border-bottom-width: 5px;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    -unity-background-image-tint-color: rgb(0, 0, 0);
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    -unity-text-align: upper-left;
+    position: absolute;
+}
+
+.menu-button {
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 50px;
+    width: 88%;
+    height: 16%;
+    background-color: rgb(255, 251, 211);
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    border-left-width: 3px;
+    border-right-width: 3px;
+    border-top-width: 3px;
+    border-bottom-width: 3px;
+    visibility: visible;
+    display: flex;
+    overflow: hidden;
+    font-size: 100px;
+    -unity-font-style: bold;
+    transition-property: scale;
+    transition-duration: 0.5s;
+    transition-timing-function: ease;
+    transition-delay: 0.5s;
+    margin-bottom: 15px;
+    justify-content: flex-start;
+}
+
+.menu-base {
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+}
+
+.menu-label {
+    font-size: 110px;
+    -unity-font-style: bold;
+    -unity-text-outline-width: 3px;
+    -unity-text-outline-color: rgba(0, 0, 0, 255);
+    color: rgba(255, 178, 0, 255);
+    letter-spacing: 5px;
+    position: absolute;
+    top: 25px;
+}
+
+.menu-background {
+    background-image: resource('BackgroundImages/felixDumpBackground');
+}

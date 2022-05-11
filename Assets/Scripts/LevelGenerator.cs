@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 using Platforms.Components;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -26,7 +25,7 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField, Range(10, 100)] private int height;
 
 
-    // Also, the height of cylinder section
+    // Height of floor
     private const float FloorHeight = 1.5f;
 
 
@@ -41,7 +40,6 @@ public class LevelGenerator : MonoBehaviour
         StartCoroutine(GenerateLevel());
     }
 
-    // TODO: Encapsulate generation to outer class
     IEnumerator GenerateLevel()
     {
         int pathLeft = 0;
@@ -51,10 +49,10 @@ public class LevelGenerator : MonoBehaviour
         const int sectionAmount = 12;
         var hasPlatform = new int[sectionAmount];
 
-        int floorsToGenerate = 5;
+        int floorsToGenerate = 6;
         float floorRotationDelta = 0;
-
-        // Generate 2 cylinders on top of the first floor
+        
+        // Generating top 2 helix sections
         cylinderFactory.GetInstance(helixTransform, GetFloorCenterPosition(-2), Quaternion.identity);
         cylinderFactory.GetInstance(helixTransform, GetFloorCenterPosition(-1), Quaternion.identity);
 
@@ -69,14 +67,15 @@ public class LevelGenerator : MonoBehaviour
             });
 
             floorRotationDelta += Mathf.Sqrt(difficulty) * Random.Range(-10f, 10f);
-            var floorPosition = GetFloorCenterPosition(floorIndex);
+            // var floorPosition = GetFloorCenterPosition(floorIndex);
 
             FloorRoot floor = floorRootFactory.GetInstance(helixTransform,
-                floorPosition, Quaternion.identity).GetComponent<FloorRoot>();
+                GetFloorCenterPosition(floorIndex), Quaternion.identity).GetComponent<FloorRoot>();
 
             floor.OnFloorPass += () => floorsToGenerate++;
 
-            cylinderFactory.GetInstance(helixTransform, floorPosition, Quaternion.identity);
+            // Generating cylinder for current floor
+            cylinderFactory.GetInstance(helixTransform, GetFloorCenterPosition(floorIndex), Quaternion.identity);
 
 
             // TODO: Encapsulate level generation to some flexible & higher-level abstraction
@@ -149,6 +148,7 @@ public class LevelGenerator : MonoBehaviour
                     Quaternion.Euler(0, 30 * (hole.Item2 - hole.Item1 + 1), 0), 3f);
                 floor.AddPlatform(redPlatform);
             }
+            
         }
     }
 
@@ -158,5 +158,5 @@ public class LevelGenerator : MonoBehaviour
     /// <param name="floorIndex">starts from 0</param>
     /// <returns></returns>
     private Vector3 GetFloorCenterPosition(int floorIndex) =>
-        Vector3.down * floorIndex * FloorHeight;
+        Vector3.down * (floorIndex * FloorHeight);
 }

@@ -1,0 +1,11 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/USS_Classes/menu.uss?fileID=7433441132597879392&amp;guid=424252cf08150bd40a007926f487406c&amp;type=3#menu" />
+    <ui:VisualElement class="menu-base menu-background">
+        <ui:VisualElement name="menuContainer" class="menu-container">
+            <ui:Label text="MAIN MENU" display-tooltip-when-elided="true" name="menuLabel" class="menu-label" style="letter-spacing: 2px;" />
+            <ui:Button text="START" display-tooltip-when-elided="true" name="startButton" class="menu-button" />
+            <ui:Button text="SETTINGS" display-tooltip-when-elided="true" name="settingsButton" class="menu-button" />
+            <ui:Button text="QUIT" display-tooltip-when-elided="true" name="quitButton" class="menu-button" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

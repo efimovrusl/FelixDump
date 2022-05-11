@@ -11,13 +11,12 @@ public class ResetComponent : MonoBehaviour
     // becomes parent of the object after Resetting
     public Transform parentForInactiveState; 
 
-    private void Start() => Reset();
+    private void Awake() => Reset();
 
     public void Reset()
     {
         StopAllCoroutines();
         transform.parent = parentForInactiveState;
-        Debug.Log(gameObject.transform.parent);
         if (!TryGetComponent<Rigidbody>(out _))
             rigbody = gameObject.AddComponent<Rigidbody>();
         rigbody.isKinematic = true;

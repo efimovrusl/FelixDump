@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using Platforms.Components;
 using UnityEngine;
 using UnityEngine.Events;
-using Zenject;
 using Random = UnityEngine.Random;
 
 
