@@ -1,15 +1,14 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.SceneManagement;      
-                                        
+using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
+
 public class GameManager : MonoBehaviour
-{                                       
-    private void Awake()                
-    {                                   
-        SceneManager.LoadScene("UI", LoadSceneMode.Additive);
+{
+    public void QuitApplication()
+    {
+        Application.Quit();
     }
 }
-                             
