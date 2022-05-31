@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
-<engine:UXML
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:engine="UnityEngine.UIElements"
-    xmlns:editor="UnityEditor.UIElements"
-    xsi:noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd"
->
-    
-</engine:UXML>
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="LevelGameplay" src="project://database/Assets/UI/Hierarchy/Level/LevelGameplay.uxml?fileID=9197481963319205126&amp;guid=33fd42d9cd4269b4299ac04d5c910aeb&amp;type=3#LevelGameplay" />
+    <ui:Template name="LevelMenu" src="project://database/Assets/UI/Hierarchy/Level/LevelMenu.uxml?fileID=9197481963319205126&amp;guid=b1bcf0453b044ee49bb94df7aea9489d&amp;type=3#LevelMenu" />
+    <ui:Template name="LevelResults" src="project://database/Assets/UI/Hierarchy/Level/LevelResults.uxml?fileID=9197481963319205126&amp;guid=c11711a2d5030de4bb3d5f904d036bcc&amp;type=3#LevelResults" />
+    <Style src="project://database/Assets/UI/USS_Classes/menu.uss?fileID=7433441132597879392&amp;guid=424252cf08150bd40a007926f487406c&amp;type=3#menu" />
+    <ui:Instance template="LevelGameplay" name="LevelGameplay" class="menu-base" />
+    <ui:Instance template="LevelMenu" name="LevelMenu" class="menu-base" />
+    <ui:Instance template="LevelResults" name="LevelResults" class="menu-base" />
+</ui:UXML>

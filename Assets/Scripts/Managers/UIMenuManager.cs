@@ -1,13 +1,14 @@
 using System;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Zenject;
 
 namespace Managers
 {
 [RequireComponent(typeof(UIDocument))]
 public class UIMenuManager : MonoBehaviour
 {
-    private GameManager gameManager;
+    [Inject] private GameManager gameManager;
 
     private UIDocument uiDocument;
     private VisualElement rootVisualElement;
@@ -39,9 +40,9 @@ public class UIMenuManager : MonoBehaviour
         mainSettings = rootVisualElement.Q("MainSettings");
         backToMainMenuButton = rootVisualElement.Q("backToMainMenuButton");
 
-
+        startButton.RegisterCallback<ClickEvent>(_ => gameManager.LoadLevelScene());
         settingsButton.RegisterCallback<ClickEvent>(_ => EnableMainSettings());
-        // quitButton.RegisterCallback<ClickEvent>(_ => gameManager.QuitApplication());
+        quitButton.RegisterCallback<ClickEvent>(_ => gameManager.QuitApplication());
 
         backToMainMenuButton.RegisterCallback<ClickEvent>(_ => EnableMainMenu());
         
