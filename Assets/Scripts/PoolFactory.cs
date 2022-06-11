@@ -27,7 +27,9 @@ public class PoolFactory : MonoBehaviour
         {
             GameObject obj = Instantiate(prefab);
             obj.AddComponent<RotationComponent>();
-            obj.AddComponent<ResetComponent>().parentForInactiveState = gameObject?.transform;
+            var resetComponent = obj.AddComponent<ResetComponent>();
+            resetComponent.parentForInactiveState = gameObject.transform;
+            resetComponent.Reset();
             poolQueue.Enqueue(obj);
         }
     }

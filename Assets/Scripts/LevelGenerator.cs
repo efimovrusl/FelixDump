@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Managers;
 using Platforms.Components;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -29,13 +30,17 @@ public class LevelGenerator : MonoBehaviour
     private const float FloorHeight = 1.5f;
 
 
-    // INJECTED AT STARTUP
+    // Injected before mono-behaviours' awake phase
     [Inject] private Player player;
+    [Inject] private SceneLoader sceneLoader;
 
 
     private void Start()
     {
-        player.onDeath += () => { SceneManager.LoadScene("MainScene"); };
+        // player.onDeath += () =>
+        // {
+        //     sceneLoader.LoadLevelScene();
+        // };
 
         StartCoroutine(GenerateLevel());
     }

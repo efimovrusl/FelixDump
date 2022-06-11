@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:Template name="MainSettings" src="project://database/Assets/UI/Hierarchy/MainMenu/MainSettings.uxml?fileID=9197481963319205126&amp;guid=c7349e09c4ae13746bbd0a995b3d2c52&amp;type=3#MainSettings" />
+    <ui:Template name="MainMenu" src="project://database/Assets/UI/Hierarchy/MainMenu/MainMenu.uxml?fileID=9197481963319205126&amp;guid=6e6f59f9b9c7b6f489261507b50168a6&amp;type=3#MainMenu" />
+    <Style src="project://database/Assets/UI/USS_Classes/menu.uss?fileID=7433441132597879392&amp;guid=424252cf08150bd40a007926f487406c&amp;type=3#menu" />
+    <ui:VisualElement name="HomeScreen" class="menu-base">
+        <ui:Instance template="MainSettings" name="MainSettings" class="menu-base" />
+        <ui:Instance template="MainMenu" name="MainMenu" class="menu-base" />
+    </ui:VisualElement>
+</ui:UXML>
