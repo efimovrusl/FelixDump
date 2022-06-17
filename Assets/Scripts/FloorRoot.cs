@@ -13,7 +13,7 @@ public class FloorRoot : MonoBehaviour
 
     private List<GameObject> platforms; // platforms, walls, etc
 
-    public event UnityAction OnFloorPass;
+    public Action OnFloorPass;
     
     private void Awake()
     {

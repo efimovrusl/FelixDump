@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 using Zenject;
 using Random = UnityEngine.Random;
 
-public class LevelGenerator : MonoBehaviour
+public class LevelManager : MonoBehaviour
 {
     [Space(5), Header("ObjectPooling factories")] [SerializeField]
     private PoolFactory platform30Factory;
@@ -72,10 +72,10 @@ public class LevelGenerator : MonoBehaviour
             });
 
             floorRotationDelta += Mathf.Sqrt(difficulty) * Random.Range(-10f, 10f);
-            // var floorPosition = GetFloorCenterPosition(floorIndex);
 
-            FloorRoot floor = floorRootFactory.GetInstance(helixTransform,
-                GetFloorCenterPosition(floorIndex), Quaternion.identity).GetComponent<FloorRoot>();
+            FloorRoot floor = floorRootFactory.GetInstance(
+                helixTransform, GetFloorCenterPosition(floorIndex), Quaternion.Euler(0, floorRotationDelta, 0))
+                .GetComponent<FloorRoot>();
 
             floor.OnFloorPass += () => floorsToGenerate++;
 
@@ -164,4 +164,23 @@ public class LevelGenerator : MonoBehaviour
     /// <returns></returns>
     private Vector3 GetFloorCenterPosition(int floorIndex) =>
         Vector3.down * (floorIndex * FloorHeight);
+
+    class LevelGenerator
+    {
+        private readonly int compexity;
+        private readonly int? height;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="compexity"> has to be in range 0 - 255 </param>
+        /// <param name="height">height of helix</param>
+        public LevelGenerator(byte compexity, byte? height, byte straightTunnels)
+        {
+            this.compexity = compexity;
+            this.height = height;
+        }
+    }
+    
 }
+

@@ -3,7 +3,7 @@
     <ui:VisualElement class="menu-base menu-background">
         <ui:VisualElement name="menuContainer" class="menu-container">
             <ui:Label text="SETTINGS" display-tooltip-when-elided="true" name="menuLabel" class="menu-label" style="-unity-text-outline-width: 2px;" />
-            <ui:Slider value="42" high-value="100" name="sensitivitySlider" direction="Horizontal" low-value="1" show-input-field="false" inverted="false" page-size="1" style="width: 87%; height: 6%; font-size: 59px; bottom: 28px;" />
+            <ui:Slider value="42" high-value="100" name="sensitivitySlider" direction="Horizontal" low-value="1" show-input-field="false" inverted="false" page-size="1" style="width: 87%; height: 7%; bottom: 28px; -unity-background-scale-mode: scale-and-crop; background-image: none; border-top-left-radius: 62px; border-bottom-left-radius: 62px; border-top-right-radius: 62px; border-bottom-right-radius: 62px; cursor: url(&apos;project://database/Assets/Plugins/Zenject/OptionalExtras/SampleGame1%20(Beginner)/Media/Textures/target.png?fileID=2800000&amp;guid=be34ee1d3a3899d49a43310b45415ed3&amp;type=3#target&apos;);" />
             <ui:Button text="BACK" display-tooltip-when-elided="true" name="backToMainMenuButton" class="menu-button" />
         </ui:VisualElement>
     </ui:VisualElement>

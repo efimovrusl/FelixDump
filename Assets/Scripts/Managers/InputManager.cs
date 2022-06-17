@@ -36,13 +36,11 @@ public class InputManager : MonoBehaviour
     
     private void StartTouch(InputAction.CallbackContext ctx)
     {
-        // Debug.Log($"StartTouch: {touchControls.Touch.TouchPosition.ReadValue<Vector2>()}");
         StartCoroutine(_TouchHandler());
     }
-    
+
     private void EndTouch(InputAction.CallbackContext ctx)
     {
-        // Debug.Log($"EndTouch: {touchControls.Touch.TouchPosition.ReadValue<Vector2>()}");
     }
 
     private IEnumerator _TouchHandler()

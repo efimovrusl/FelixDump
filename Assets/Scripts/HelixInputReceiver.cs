@@ -1,9 +1,8 @@
-using System;
 using Managers;
 using UnityEngine;
 using Zenject;
 
-public class HelixRotator : MonoBehaviour
+public class HelixInputReceiver : MonoBehaviour
 {
     [Inject] private InputManager inputManager;
     [Inject] private PlayerPrefsManager playerPrefsManager;

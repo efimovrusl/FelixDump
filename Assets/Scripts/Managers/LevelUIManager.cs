@@ -6,7 +6,7 @@ using Zenject;
 namespace Managers
 {
 [RequireComponent(typeof(UIDocument))]
-public class UILevelManager : MonoBehaviour
+public class LevelUIManager : MonoBehaviour
 {
     [Inject] private GameManager gameManager;
 
