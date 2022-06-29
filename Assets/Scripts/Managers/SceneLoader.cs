@@ -10,7 +10,7 @@ namespace Managers
 {
 /// <summary>
 /// Reusable Scene Manager, which allows asynchronous scenes' loading and unloading
-/// TODO: Add loading scene for even smoother transitions between levels
+/// TODO: Add loading-bar scene for even smoother transitions between levels
 /// </summary>
 public class SceneLoader : MonoBehaviour
 {
