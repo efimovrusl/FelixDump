@@ -35,24 +35,16 @@ public class PoolFactory : MonoBehaviour
     }
     #endregion
     
-    /// <summary> Position and rotation args are treated as LOCAL </summary>
-    public GameObject GetInstance(Transform parentTransform, Vector3 position, Quaternion rotation) =>
-        GetInstance(parentTransform, position, rotation, rotation, 
-            float.PositiveInfinity);
         
     /// <summary> Position and rotation args are treated as LOCAL </summary>
-    public GameObject GetInstance(Transform parentTransform, Vector3 position, 
-        Quaternion initialRotation, Quaternion endRotation, float cyclePeriod = 3f)
+    public GameObject NextInstance(Transform parentTransform, Vector3 position, Quaternion rotation)
     {
         GameObject instance = poolQueue.Dequeue();
         poolQueue.Enqueue(instance);
-        // TODO: Seem to be not needed anymore, but..
-        // instance.GetComponent<ResetComponent>().Reset();
         instance.SetActive(true);
         instance.transform.parent = parentTransform;
         instance.transform.localPosition = position;
-        instance.transform.localRotation = initialRotation;
-        instance.GetComponent<RotationComponent>().StartCyclicRotation(endRotation, cyclePeriod);
+        instance.transform.localRotation = rotation;
         return instance;
     }
 

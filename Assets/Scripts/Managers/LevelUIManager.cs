@@ -20,8 +20,12 @@ public class LevelUIManager : MonoBehaviour
             throw new Exception("No UIDocument found.");
         }
 
-        // gameManager = FindObjectOfType<GameManager>();
         rootVisualElement = uiDocument.rootVisualElement;
+    }
+
+    public static void LoadResultsMenu()
+    {
+        
     }
 }
 }
