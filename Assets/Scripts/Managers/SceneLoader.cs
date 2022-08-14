@@ -9,7 +9,8 @@ using Object = UnityEngine.Object;
 namespace Managers
 {
 /// <summary>
-/// Encapsulation of scene loading process
+/// Reusable Scene Manager, which allows asynchronous scenes' loading and unloading
+/// TODO: Add loading-bar scene for even smoother transitions between levels
 /// </summary>
 public class SceneLoader : MonoBehaviour
 {
