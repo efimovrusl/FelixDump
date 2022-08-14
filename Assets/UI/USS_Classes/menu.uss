@@ -3,8 +3,7 @@
     align-items: center;
     height: 50%;
     width: 75%;
-    opacity: 0.87;
-    background-color: rgb(255, 241, 201);
+    background-color: rgba(255, 255, 255, 0.8);
     border-top-left-radius: 70px;
     border-bottom-left-radius: 0;
     border-top-right-radius: 0;
@@ -33,7 +32,7 @@
     border-bottom-right-radius: 50px;
     width: 88%;
     height: 16%;
-    background-color: rgb(255, 251, 211);
+    background-color: rgba(255, 255, 255, 0.64);
     border-left-color: rgb(0, 0, 0);
     border-right-color: rgb(0, 0, 0);
     border-top-color: rgb(0, 0, 0);
@@ -67,11 +66,12 @@
     font-size: 110px;
     -unity-font-style: bold;
     -unity-text-outline-width: 3px;
-    -unity-text-outline-color: rgba(0, 0, 0, 255);
-    color: rgba(255, 178, 0, 255);
+    -unity-text-outline-color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
     letter-spacing: 5px;
     position: absolute;
     top: 25px;
+    white-space: normal;
 }
 
 .menu-background {

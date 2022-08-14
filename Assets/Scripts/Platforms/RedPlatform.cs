@@ -1,3 +1,4 @@
+using Platforms;
 using UnityEngine;
 
 public abstract class RedPlatform : Platform
@@ -7,7 +8,7 @@ public abstract class RedPlatform : Platform
     {
         if (collision.gameObject.TryGetComponent<Player>(out var player))
         {
-            player.TakeDamage();
+            player.TakeDamage( GetComponentInParent<FloorRoot>() );
         }
     }
 }

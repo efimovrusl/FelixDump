@@ -1,21 +1,30 @@
+using System;
 using UnityEngine;
 
 namespace Managers
 {
 public class PlayerPrefsManager : MonoBehaviour
 {
-    [SerializeField] private float defaultSensitivity = 0.05f;
+    [SerializeField, Range( 0.05f, 0.3f )] private float defaultSensitivity;
+
+    private void Awake()
+    {
+        // TODO: Delete after adding sensitivity setting
+        Sensitivity = defaultSensitivity;
+    }
+
     public float Sensitivity
     {
         get
         {
-            if (!PlayerPrefs.HasKey("Sensitivity"))
+            if ( !PlayerPrefs.HasKey( "Sensitivity" ) )
             {
                 Sensitivity = defaultSensitivity;
             }
-            return PlayerPrefs.GetFloat("Sensitivity");
+
+            return PlayerPrefs.GetFloat( "Sensitivity" );
         }
-        set => PlayerPrefs.SetFloat("Sensitivity", value);
+        set => PlayerPrefs.SetFloat( "Sensitivity", value );
     }
 }
 }

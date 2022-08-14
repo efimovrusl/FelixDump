@@ -11,7 +11,7 @@ public class CameraHolder : MonoBehaviour
     private void FixedUpdate()
     {
         var focusTransform = transform;
-        cameraManager.MoveCameraTo(focusTransform, focusTransform.localPosition, focusTransform.localRotation);
+        cameraManager.MoveCameraTo( focusTransform );
     }
 }
 }

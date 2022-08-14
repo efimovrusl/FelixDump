@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Platforms.Components;
 using UnityEngine;
+using Zenject;
 
 /// <summary>
 /// Factory has pool of pre-instantiated objects
@@ -14,6 +15,8 @@ public class PoolFactory : MonoBehaviour
     [SerializeField, Range(1, 1024)] private int poolSize = 128;
     
     private readonly Queue<GameObject> poolQueue = new Queue<GameObject>();
+
+    [Inject] private DiContainer diContainer;
 
     #region Pool initialization
     private void Awake()

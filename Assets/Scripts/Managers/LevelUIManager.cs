@@ -5,7 +5,7 @@ using Zenject;
 
 namespace Managers
 {
-[RequireComponent(typeof(UIDocument))]
+[RequireComponent( typeof( UIDocument ) )]
 public class LevelUIManager : MonoBehaviour
 {
     [Inject] private GameManager gameManager;
@@ -13,19 +13,27 @@ public class LevelUIManager : MonoBehaviour
     private UIDocument uiDocument;
     private VisualElement rootVisualElement;
 
+    private Label inGameScoreLabel;
+
     private void Start()
     {
-        if (!TryGetComponent(out uiDocument))
+        if ( !TryGetComponent( out uiDocument ) )
         {
-            throw new Exception("No UIDocument found.");
+            throw new Exception( "No UIDocument found." );
         }
 
         rootVisualElement = uiDocument.rootVisualElement;
+
+        inGameScoreLabel = rootVisualElement.Q<Label>( "InGameScoreLabel" );
     }
 
-    public static void LoadResultsMenu()
+    public void LoadResultsMenu()
     {
-        
+    }
+    
+    public void SetInGameScore( int score )
+    {
+        inGameScoreLabel.text = $"{score}";
     }
 }
 }

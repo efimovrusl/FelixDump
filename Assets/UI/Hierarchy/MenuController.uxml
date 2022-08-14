@@ -4,6 +4,6 @@
     <Style src="project://database/Assets/UI/USS_Classes/menu.uss?fileID=7433441132597879392&amp;guid=424252cf08150bd40a007926f487406c&amp;type=3#menu" />
     <ui:VisualElement name="HomeScreen" class="menu-base">
         <ui:Instance template="MainSettings" name="MainSettings" class="menu-base" />
-        <ui:Instance template="MainMenu" name="MainMenu" class="menu-base" />
+        <ui:Instance template="MainMenu" name="MainMenu" class="menu-base" style="top: 0; left: -2px;" />
     </ui:VisualElement>
 </ui:UXML>

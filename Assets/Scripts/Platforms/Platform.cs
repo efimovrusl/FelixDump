@@ -1,17 +1,16 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using Platforms;
 using UnityEngine;
 
 [SelectionBase, DisallowMultipleComponent]
 public abstract class Platform : MonoBehaviour
 {
     [SerializeField] protected float angle;
-    private void OnCollisionEnter(Collision collision)
+
+    private void OnCollisionEnter( Collision collision )
     {
-        if (collision.collider.TryGetComponent<Player>(out var player))
+        if ( collision.collider.TryGetComponent<Player>( out var player ) )
         {
-            player.GetComponent<Rigidbody>().velocity = -Physics.gravity * 0.7f;
+            player.TouchPlatform( GetComponentInParent<FloorRoot>() );
         }
     }
 }

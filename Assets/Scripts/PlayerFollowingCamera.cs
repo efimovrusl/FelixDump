@@ -11,14 +11,14 @@ public class PlayerFollowingCamera : MonoBehaviour
 
     private void Update()
     {
-        
-        if (player.transform.position.y < transform.position.y)
+        if ( player.transform.position.y < transform.position.y ||
+             player.transform.position.y > transform.position.y + 1.5f )
         {
             // camera moves down when player reaches any point lower
             transform.position = new Vector3(
-                transform.position.x, 
-                player.transform.position.y, 
-                transform.position.z);
+                transform.position.x,
+                player.transform.position.y,
+                transform.position.z );
         }
     }
 }
