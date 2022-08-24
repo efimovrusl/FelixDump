@@ -364,7 +364,7 @@ GameObject:
   - component: {fileID: 510975890}
   - component: {fileID: 510975889}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Parallelepiped
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

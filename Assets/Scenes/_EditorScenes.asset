@@ -15,9 +15,9 @@ MonoBehaviour:
   Setups:
   - m_Path: Assets/Scenes/RootScene.unity
     m_IsLoaded: 1
-    m_IsActive: 0
+    m_IsActive: 1
     m_IsSubScene: 0
-  - m_Path: Assets/Scenes/MenulUIScene.unity
+  - m_Path: Assets/Scenes/MenuUIScene.unity
     m_IsLoaded: 1
     m_IsActive: 0
     m_IsSubScene: 0
@@ -27,7 +27,7 @@ MonoBehaviour:
     m_IsSubScene: 0
   - m_Path: Assets/Scenes/LevelUIScene.unity
     m_IsLoaded: 1
-    m_IsActive: 1
+    m_IsActive: 0
     m_IsSubScene: 0
   - m_Path: Assets/Scenes/LevelScene.unity
     m_IsLoaded: 1

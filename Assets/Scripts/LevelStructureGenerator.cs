@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using MathScripts;
+using MyScripts;
 using Platforms;
 using UnityEngine;
 using Random = System.Random;
@@ -12,6 +12,9 @@ public class LevelStructureGenerator
 {
     private const float StraightHoleChance = 0.8f;
     private const int StraightHoleMinLength = 4;
+
+    private const float MinRedPlatformHalfPeriod = 0.7f;
+    private const float MaxRedPlatformHalfPeriod = 1.3f;
     private int StraightHoleMaxLength => floorsAmount / 3;
 
     private readonly int sectorsAmount;
@@ -31,9 +34,11 @@ public class LevelStructureGenerator
 
     public LevelStructureGenerator( int levelID, int floorsAmount, int sectorsAmount = 12 )
     {
-        rand = new Random( this.levelID );
+        this.levelID = levelID;
         this.floorsAmount = floorsAmount;
         this.sectorsAmount = sectorsAmount;
+
+        rand = new Random( this.levelID );
         levelStructureArray = GetLevelBasicStructureArray();
         floorStructures = new List<FloorStructure>();
     }
@@ -65,7 +70,9 @@ public class LevelStructureGenerator
 
             var redPlatformSectors = Enumerable.Range( firstRPIndex, redPlatformSectorsAmount ).ToList();
 
-            floor.RedPlatforms.Add( new FloorStructure.RedPlatform( redPlatformSectors[0], redPlatformSectors[^1] ) );
+            floor.RedPlatforms.Add( new FloorStructure.RedPlatform( redPlatformSectors[0], redPlatformSectors[^1],
+                (float)rand.NextDouble() * 
+                (MaxRedPlatformHalfPeriod - MinRedPlatformHalfPeriod) + MinRedPlatformHalfPeriod ) );
         }
 
         return floor;
@@ -89,7 +96,7 @@ public class LevelStructureGenerator
                     straightFallHoleSector = rand.Next( 0, sectorsAmount );
                 }
             }
-            
+
             var bagOfHolesToGenerateOnFloor = new MyMath.WeightedRandomBag<int>( new (int, float)[]
             {
                 (1, 100), (2, 100), (3, 100), (4, 100) // (amountOfHoles, chanceWeight)

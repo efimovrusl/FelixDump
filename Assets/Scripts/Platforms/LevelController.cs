@@ -7,6 +7,7 @@ using UnityEngine.Events;
 using Zenject;
 using SystemRandom = System.Random;
 
+
 namespace Platforms
 {
 public class LevelController : MonoBehaviour
@@ -54,7 +55,7 @@ public class LevelController : MonoBehaviour
     private void Start()
     {
         OnLevelPass += () => LevelIsPassed = true;
-        player.OnTouchFinishPlatform += OnLevelPass.Invoke;
+        player.OnTouchFinishPlatform += () => OnLevelPass.Invoke();
     }
 
     public void GenerateLevel( int difficulty, int height )
@@ -85,7 +86,7 @@ public class LevelController : MonoBehaviour
 
         for ( int floorIndex = -2; floorIndex <= height; floorIndex++ )
         {
-            yield return new WaitUntil( () => floorsToGenerate > 0 );
+            if ( floorsToGenerate <= 0 ) yield return new WaitUntil( () => floorsToGenerate > 0 );
             floorsToGenerate--;
 
             cylinderFactory.NextInstance( helixTransform, Vector3.up * Y( floorIndex ), Quaternion.identity );
@@ -93,12 +94,18 @@ public class LevelController : MonoBehaviour
             if ( floorIndex < 0 ) continue;
             if ( floorIndex == height )
             {
-                finishFloorFactory.NextInstance( helixTransform, Vector3.up * Y( floorIndex ), Quaternion.identity );
+                currentFloorRoot = floorRootFactory.NextInstance( helixTransform,
+                    Vector3.up * Y( floorIndex ),
+                    Quaternion.identity ).GetComponent<FloorRoot>();
+                var finishFloor = finishFloorFactory.NextInstance( currentFloorRoot.transform, 
+                    Vector3.zero, Quaternion.identity );
+                currentFloorRoot.AddObject( finishFloor );
+                floorRoots.Add( currentFloorRoot );
                 continue;
             }
-            
+
             var floorStructure = levelStructureGenerator.GetFloorStructure( floorIndex );
-            
+
             currentFloorRoot = floorRootFactory.NextInstance( helixTransform,
                     Vector3.up * Y( floorIndex ),
                     Quaternion.Euler( 0, floorStructure.YRotation, 0 ) )

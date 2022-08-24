@@ -4,9 +4,9 @@ namespace Platforms
 {
 public class FinishFloor : MonoBehaviour
 {
-    private void OnTriggerEnter( Collider other )
+    private void OnCollisionEnter( Collision collision )
     {
-        if ( other.TryGetComponent( out Player player ) )
+        if ( collision.collider.TryGetComponent( out Player player ) )
         {
             player.TouchFinishPlatform();
         }

@@ -1,7 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using ModestTree;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
@@ -13,11 +13,11 @@ namespace Managers
 /// </summary>
 public class SceneLoader : MonoBehaviour
 {
-    [SerializeField] private Object menuScene;
-    [SerializeField] private List<Object> menuDecoratorScenes;
+    [SerializeField] private string menuScene;
+    [SerializeField] private List<string> menuDecoratorScenes;
 
-    [SerializeField] private Object levelScene;
-    [SerializeField] private List<Object> levelDecoratorScenes;
+    [SerializeField] private string levelScene;
+    [SerializeField] private List<string> levelDecoratorScenes;
 
     /// <summary>
     /// 1) UNLOADS LEVEL scene and all its' decorator scenes
@@ -28,8 +28,7 @@ public class SceneLoader : MonoBehaviour
     {
         StartCoroutine( QueryCoroutines( new[]
         {
-            UnloadLevelScene(), LoadSceneAfterDecoratorScenes(
-                menuScene.name, menuDecoratorScenes.Select( scene => scene.name ) )
+            UnloadLevelScene(), LoadSceneAfterDecoratorScenes( menuScene, menuDecoratorScenes )
         } ) );
     }
 
@@ -42,21 +41,18 @@ public class SceneLoader : MonoBehaviour
     {
         StartCoroutine( QueryCoroutines( new[]
         {
-            UnloadMenuScene(), LoadSceneAfterDecoratorScenes(
-                levelScene.name, levelDecoratorScenes.Select( scene => scene.name ) )
+            UnloadMenuScene(), LoadSceneAfterDecoratorScenes( levelScene, levelDecoratorScenes )
         } ) );
     }
 
     private IEnumerator UnloadMenuScene()
     {
-        yield return StartCoroutine( UnloadSceneBeforeDecoratorScenes(
-            menuScene.name, menuDecoratorScenes.Select( scene => scene.name ) ) );
+        yield return StartCoroutine( UnloadSceneBeforeDecoratorScenes( menuScene, menuDecoratorScenes ) );
     }
 
     private IEnumerator UnloadLevelScene()
     {
-        yield return StartCoroutine( UnloadSceneBeforeDecoratorScenes(
-            levelScene.name, levelDecoratorScenes.Select( scene => scene.name ) ) );
+        yield return StartCoroutine( UnloadSceneBeforeDecoratorScenes( levelScene, levelDecoratorScenes ) );
     }
 
     /// <summary>Loads decorator scenes and only then loads main scene</summary>
@@ -96,7 +92,6 @@ public class SceneLoader : MonoBehaviour
     // Load multiple scenes
     private IEnumerator _LoadScenesAsync( IEnumerable<string> scenes )
     {
-        // var sceneLoadingOperations = scenes.Select(scene => SceneManager.LoadSceneAsync(scene, LoadSceneMode.Additive));
         var sceneLoadingOperations = new List<AsyncOperation>();
         foreach ( var scene in scenes )
             if ( _TryLoadSceneAsync( scene, out var loadingOperation ) )
@@ -114,7 +109,6 @@ public class SceneLoader : MonoBehaviour
     // Unload multiple scenes
     private IEnumerator _UnloadScenesAsync( IEnumerable<string> scenes )
     {
-        // var sceneUnloadingOperations = scenes.Select(SceneManager.UnloadSceneAsync); 
         var sceneUnloadingOperations = new List<AsyncOperation>();
         foreach ( var scene in scenes )
             if ( _TryUnloadSceneAsync( scene, out var unloadingOperation ) )
@@ -124,6 +118,7 @@ public class SceneLoader : MonoBehaviour
 
     private bool _TryLoadSceneAsync( string sceneName, out AsyncOperation loadingOperation )
     {
+        // Debug.Log( $"Scene '{sceneName}' is being loaded..." );
         var sceneIsLoaded = false;
         for ( var i = 0; i < SceneManager.sceneCount; i++ )
         {

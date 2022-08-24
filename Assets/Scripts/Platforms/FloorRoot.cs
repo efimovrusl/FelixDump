@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Platforms.Components;
 using UnityEngine;
 using Zenject;
@@ -13,13 +14,15 @@ public class FloorRoot : MonoBehaviour
 {
     // private Boost _boosts // TODO: Add coins and boosts
 
-    private List<GameObject> platforms; // platforms, walls, etc
+    private List<GameObject> platforms; // platforms
+    private List<GameObject> otherObjects; // etc
 
     public Action OnFloorPass;
 
     private void Awake()
     {
         platforms = new List<GameObject>();
+        otherObjects = new List<GameObject>();
     }
 
     private void OnTriggerEnter( Collider other )
@@ -41,6 +44,11 @@ public class FloorRoot : MonoBehaviour
     {
         GetComponent<Collider>().enabled = true;
         platforms.Add( platform );
+    }
+
+    public void AddObject( GameObject otherObject )
+    {
+        otherObjects.Add( otherObject );
     }
 
     public void InstantlyDeactivateFloor()
@@ -73,8 +81,13 @@ public class FloorRoot : MonoBehaviour
                     () => platform.GetComponent<ResetComponent>().Reset(), 0.5f ) );
             }
         }
-
         platforms.Clear();
+        
+        foreach ( var otherObject in otherObjects )
+        {
+            otherObject.GetComponent<ResetComponent>().Reset();
+        }
+        otherObjects.Clear();
     }
 
     private IEnumerator DoAfterSeconds( Action action, float seconds )
